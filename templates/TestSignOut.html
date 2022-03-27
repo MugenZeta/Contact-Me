@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+         <!--Bootstrap 5 CSS-->
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+        <title>Title</title>
+    </head>
+    <body>
+        <header>
+            <nav class="Nav-bar">
+                     <!--Sign out Test Button-->
+                <form action="/TestSignOut.html" method="post">
+                <input type="submit" value="Log Out">
+                </form>
+
+                 <!--Opens Off canvas-->
+                <button type="button" class="btn btn-info btn-lg" data-bs-toggle="offcanvas" data-bs-target="#AddContact">Add Contact</button>
+                <button type="button" class="btn btn-info btn-lg" data-bs-toggle="offcanvas" data-bs-target="#EditContact">Edit Contact</button>
+                <button type="button" class="btn btn-info btn-lg" data-bs-toggle="modal" data-bs-target="#DeleteContact">Delete Contact</button>
+            </nav>
+
+        </header>
+        <main>
+            <!------------------------------LOAD SERVER DATA HERE------------------------------>
+
+            <!--------------------------- OFF CANVAS FOR AddContact---------------------------->
+            <div class="offcanvas offcanvas-start" tabindex="-1" id="AddContact" aria-labelledby="AddContactLabel">
+                <div class="offcanvas-header">
+                    <h2 class="offcanvas-title text-centered" id="AddContactLabel"> Add a New Contact to Book</h2>
+                    <div class="offcanvas-body">
+                        <div>
+                            <form action="{{ url_for('addContact') }}" method="post">
+
+                                <label for="NEW_CONTACT_firstName">First Name</label>
+                                <input type="text" id="NEW_CONTACT_firstname" name="NEW_CONTACT_firstname">
+
+                                <label for="NEW_CONTACT_lastName">Last Name</label>
+                                <input type="text" id="NEW_CONTACT_lastName" name="NEW_CONTACT_lastName">
+
+                                 <label for="NEW_CONTACT_phoneNumber">Phone Number</label>
+                                <input type="text" id="NEW_CONTACT_phoneNumber" name="NEW_CONTACT_phoneNumber">
+
+                                 <label for="NEW_CONTACT_address">Address</label>
+                                <input type="text" id="NEW_CONTACT_address" name="NEW_CONTACT_address">
+
+                                <input type="submit" value="Confirm Contact">
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-------------------------------------MODAL FOR deleteConact--------------------->
+            <div id="DeleteContact" class="modal fade" role="dialog">
+                <div class="modal-dialog modal-dialog-centered">
+
+                    <!--Modal content-->
+                    <div class="modal-content">
+
+                        <div class="modal-header">
+                            <h4 class="modal-title text-center">Delete Contact</h4>
+                        </div>
+
+                        <div class="modal-body">
+                            <p class="text-centered">Are You Sure you want to delete this contact?</p>
+                            <div class="alert alert-danger" role="alert">WARNING:<br> ONCE DELETED THIS ACTION CAN NOT BE UNDONE!</div>
+                            <p class="text-centered">To complete deletion of contact please type in </p>
+                            <!--DELETION CONFIRMATION FORM-->
+                            <form action="{{ url_for('deleteContact') }}" method="post">
+                                <label for="DELETE_CONFIRMATION_NAME">Name</label>
+                                <input type="text" id="DELETE_CONFIRMATION_NAME" name="DELETE_CONFIRMATION_NAME">
+                                <input type="submit" value="DELETE CONTACT">
+                            </form>
+                            <!--END OF LOG IN DATA ENTRY-->
+                        </div>
+
+                        <div class="modal-footer">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </main>
+        <footer>
+
+        </footer>
+         <!--Bootstrap 5 JS Bundle-->
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+    </body>
+</html>
