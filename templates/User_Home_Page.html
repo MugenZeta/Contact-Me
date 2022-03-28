@@ -1,10 +1,206 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+    <head>
+        <meta charset="UTF-8">
+        <!--The proper Scaling for other devices-->
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Contact Me::Account</title>
+        <!--Bootstrap 5 CSS-->
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
 
-</body>
+        <!--Bootstrap Icons-->
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
+        <!--Custom CSS-->
+        <style>
+            @import url('https://fonts.googleapis.com/css2?family=Caveat&family=Indie+Flower&display=swap');
+
+            header{
+                font-family: 'Indie Flower', sans-serif, "Times New Roman";
+                width: 100%;
+                height: 150px;
+                background-repeat: no-repeat;
+                background-size: cover;
+                background-color: #fd7e14;
+            }
+
+
+            .LEFTPOS{
+                position: absolute;
+                top: 56px;
+                right: 50px;
+                width: 180px;
+                height: 40px;
+            }
+
+            .BUTTONGROUP{
+                position: relative;
+                top: 50px;
+                left: 40%;
+            }
+
+            .SignOutColor{
+                background-color: #a52834;
+            }
+
+
+            .titleFont{
+                font-size: 120px;
+            }
+
+
+            h3{
+                font-family: 'Indie Flower', sans-serif, "Times New Roman";
+                font-size: 64px;
+                text-align: left;
+            }
+
+            p{
+                font-family: 'Caveat', Arial, Helvetica;
+                font-size: 32px;
+            }
+
+            section{
+                font-family: 'Caveat', Arial, Helvetica;
+                font-size: 16px;
+            }
+
+            .COLOR{
+                background-color: #fd7e14;
+
+            }
+        </style>
+    </head>
+    <body class="d-flex flex-column min-vh-100">
+        <header class="container-fluid text-left text-dark">
+            <h1 class="titleFont text-left">Contact Me</h1>
+             <form class="LEFTPOS"action="/TestSignOut.html" method="post">
+                 <button type="submit" class="SignOutColor btn text-black">Sign Out</button>
+             </form>
+        </header>
+        <div class="BUTTONGROUP">
+            <button type="button" class="btn btn-primary btn-lg" data-bs-toggle="offcanvas" data-bs-target="#AddContact">Add Contact <i class="bi bi-person-plus"></i></button>
+        </div>
+        <!--OFF CANVAS FOR ADD CONTACT--->
+        <div class="offcanvas offcanvas-start" tabindex="-1" id="AddContact" aria-labelledby="AddContactLabel">
+                <div class="offcanvas-header">
+                    <h2 class="offcanvas-title" id="AddContactLabel">Add a New Contact to Book</h2>
+                </div>
+                <div class="offcanvas-body">
+                    <div class="FORMPOS">
+                        <form action="{{ url_for('addContact') }}" method="post">
+
+                            <label class="form-label" for="NEW_CONTACT_firstName">First Name</label>
+                            <input class="form-control" type="text" id="NEW_CONTACT_firstname" name="NEW_CONTACT_firstname">
+
+                            <label class="form-label" for="NEW_CONTACT_lastName">Last Name</label>
+                            <input class="form-control" type="text" id="NEW_CONTACT_lastName" name="NEW_CONTACT_lastName">
+
+                            <label class="form-label" for="NEW_CONTACT_phoneNumber">Phone Number</label>
+                            <input class="form-control" type="text" id="NEW_CONTACT_phoneNumber" name="NEW_CONTACT_phoneNumber">
+
+                            <label class="form-label" for="NEW_CONTACT_address">Address</label>
+                            <input class="form-control" type="text" id="NEW_CONTACT_address" name="NEW_CONTACT_address">
+                            <br>
+
+                            <button type="button" class="btn btn-outline-danger" data-bs-dismiss="offcanvas">Close</button>
+                            <button type="submit" class="btn btn-outline-success">Add Contact</button>
+                        </form>
+                    </div>
+                </div>
+         </div>
+
+         <!--OFF CANVAS FOR EDITING CONTACT--->
+        <div class="offcanvas offcanvas-start" tabindex="-1" id="EditContact" aria-labelledby="EditContactLable">
+                <div class="offcanvas-header">
+                    <h2 class="offcanvas-title" id="EditContactLable">Change Contact Information</h2>
+                </div>
+                <div class="offcanvas-body">
+                    <div class="FORMPOS">
+                        <form id="EditContactForm" action="{{ url_for('editContact') }}" method="post">
+
+                            <label class="form-label" for="NEW_CONTACT_firstName">First Name</label>
+                            <input class="form-control" type="text" id="EDIT_CONTACT_firstname" name="NEW_CONTACT_firstname" placeholder="{{ FirstName }}">
+
+                            <label class="form-label" for="NEW_CONTACT_lastName">Last Name</label>
+                            <input class="form-control" type="text" id="EDIT_CONTACT_lastName" name="NEW_CONTACT_lastName" placeholder="{{ LastName }}">
+
+                            <label class="form-label" for="NEW_CONTACT_phoneNumber">Phone Number</label>
+                            <input class="form-control" type="text" id="EDIT_CONTACT_phoneNumber" name="NEW_CONTACT_phoneNumber" placeholder="{{ PhoneNumber }}">
+
+                            <label class="form-label" for="NEW_CONTACT_address">Address</label>
+                            <input class="form-control" type="text" id="EDIT_CONTACT_address" name="NEW_CONTACT_address" placeholder="{{ Address }}">
+                            <br>
+
+                            <button type="button" class="btn btn-outline-danger" data-bs-dismiss="offcanvas">Close</button>
+                            <button type="submit" form="EditContactForm" class="btn btn-outline-success">Change Contact</button>
+                        </form>
+                    </div>
+                </div>
+         </div>
+
+        <!--MODAL FOR DELETING CONTACT---------->
+        <div id="DeleteContact" class="modal fade" role="dialog">
+                <div class="modal-dialog modal-dialog-centered">
+
+                    <!--Modal content-->
+                    <div class="modal-content">
+
+                        <div class="modal-header">
+                            <h4 class="modal-title text-center">Delete Contact</h4>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                        </div>
+
+                        <div class="modal-body">
+                            <p class="text-centered">Are You Sure you want to delete <h4>{{FirstName}}</h4>?</p>
+                            <div class="alert alert-danger" role="alert">WARNING:<br> ONCE DELETED THIS ACTION CAN NOT BE UNDONE!</div>
+                            <!--DELETION CONFIRMATION FORM-->
+                            <form id="DeletionForm"action="{{ url_for('deleteContact') }}" method="post">
+                            </form>
+                            <!--END OF LOG IN DATA ENTRY-->
+                        </div>
+
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Close</button>
+                            <button type="submit" form="DeletionForm" class="btn btn-outline-danger">DELETE CONTACT</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        <!--------------DATABASE DATA LIST------------------->
+        <section class="p-5">
+        {% block content %}
+
+        	<table class="table">
+                <TH>
+                    <TD scope="col"><b>First Name</b></TD>
+                    <TD scope="col"><b>Last Name</b></TD>
+                    <TD scope="col"><b>Phone Number</b></TD>
+                    <TD scope="col"><b>Address</b></TD>
+                    <TD scope="col"><b>Options</b></TD>
+                    <TD></TD>
+                </TH>
+                {% for cl in contList %}
+                <TR>
+                    <TD class="row"></TD>
+                    <TD>{{FirstName}}</TD>
+                    <TD>{{LastName}}</TD>
+                    <TD>{{PhoneNumber}}</TD>
+                    <TD>{{Address}}</TD>
+
+                    <TD><button type="button" class="btn btn-warning btn-lg" data-bs-toggle="offcanvas" data-bs-target="#EditContact">Edit Contact <i class="bi bi-person-lines-fill"></i></button>
+                        <button type="button" class="btn btn-danger btn-lg" data-bs-toggle="modal" data-bs-target="#DeleteContact">Delete Contact <i class="bi bi-person-dash"></i></button></TD>
+                </TR>
+                {% endfor %}
+            </table>
+        {% endblock %}
+        </section>
+
+        <footer class="COLOR container-fluid text-black mt-auto">
+            <br>
+            <p>This App is Powered By Google App Engine</p>
+        </footer>
+        <!--Bootstrap 5 JS Bundle-->
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+    </body>
 </html>
