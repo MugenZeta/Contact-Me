@@ -1,0 +1,17 @@
+runtime: python39 # or another supported version
+api_verson: 1
+threadsafe: true
+
+
+handlers:
+  - url: /.*
+    script: app.py
+
+  - url: /index.html
+    static_files: /index.html
+    upload: test/index.html
+
+
+  libraries:
+    - name: flask
+      version: 2.1.0
